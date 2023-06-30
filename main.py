@@ -1,4 +1,5 @@
 import pytrie
+import os
 import numpy as np
 from collections import deque
 import tkinter as tk
@@ -42,10 +43,18 @@ common_names = set([
 
 valid_words = set()
 
+import os
+
+# Get the directory of the current script
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Construct the full path to the file
+file_path = os.path.join(dir_path, 'filtered_words.txt')
+
 def load_dictionary():
     global valid_words
     # load words from a text file and store them in a trie
-    with open('filtered_words.txt', 'r') as f:
+    with open(file_path, 'r') as f:
         words = [word.strip().lower() for word in f.readlines()]
         valid_words = set(words)
 
@@ -63,7 +72,7 @@ def load_dictionary():
 
             # Mark the complete word with a '*'
             trie[word + '*'] = word
-            print(word)
+            
 
 # Start a thread to load the dictionary
 threading.Thread(target=load_dictionary).start()
@@ -175,10 +184,10 @@ mycolor = "#4B9CD3"
 
 root = tk.Tk()
 root.geometry("400x400")  # set initial size
-root.configure(bg=mycolor)  # set background color to UNC blue
+root.configure(background=mycolor)  # set background color to UNC blue
 
 # Create a frame to hold the entries and make it resize with the window
-frame = tk.Frame(root, bg="#4B9CD3")  # also set frame color to UNC blue
+frame = tk.Frame(root, background="#4B9CD3")  # also set frame color to UNC blue
 frame.grid(row=0, column=0, sticky='nsew')
 root.grid_columnconfigure(0, weight=1)
 root.grid_rowconfigure(0, weight=1)
